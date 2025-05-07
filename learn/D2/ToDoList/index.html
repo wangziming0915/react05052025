@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image-Inspired Todo List</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #e0e0e0; /* Light background like the image */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            padding-top: 50px; /* Add some space from the top */
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px; /* Limit width */
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            color: #333;
+        }
+        #todo-form {
+            display: flex;
+            margin-bottom: 20px;
+            border: 1px solid #ccc; /* Border for input area */
+            border-radius: 5px;
+            overflow: hidden; /* Prevents internal elements from breaking border-radius */
+        }
+        #todo-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none; /* Remove default input border */
+            outline: none;
+        }
+        #todo-form button {
+            padding: 10px 15px;
+            background-color: #007bff; /* Blue button */
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1; /* Adjust line height for the '+' symbol */
+            border-radius: 0 5px 5px 0; /* Rounded on the right */
+        }
+         #todo-form button:hover {
+            background-color: #0056b3;
+        }
+        #todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #todo-list li {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee; /* Separator */
+            justify-content: space-between; /* Space between text/check and delete */
+        }
+         #todo-list li:last-child {
+             border-bottom: none; /* No border on last item */
+         }
+        .todo-item-left {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; /* Allows text area to take up space */
+            cursor: pointer; /* Indicate the area is clickable */
+        }
+        .check-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc; /* Circle border */
+            border-radius: 50%; /* Make it round */
+            margin-right: 10px;
+            cursor: pointer;
+            display: inline-block;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+         li.completed .check-circle {
+             background-color: #007bff; /* Fill circle when completed */
+             border-color: #007bff;
+         }
+         li.completed .todo-text {
+             text-decoration: line-through;
+             color: #888; /* Grey out text when completed */
+         }
+        .todo-text {
+            flex-grow: 1; /* Allow text to take remaining space */
+        }
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #dc3545; /* Red color for delete */
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0; /* Remove default padding */
+            flex-shrink: 0; /* Prevent shrinking */
+            margin-left: 10px;
+        }
+         .delete-btn:hover {
+            color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>To Do List</h1>
+
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new todo" required>
+            <button type="submit">+</button>
+        </form>
+
+        <ul id="todo-list">
+            </ul>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
