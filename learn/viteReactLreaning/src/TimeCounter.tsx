@@ -4,6 +4,7 @@ export default function TimeCounter() {
   const [time, setTime] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
 
+  useEffect(() => {});
 
   function handleStart() {
     const interval = setInterval(() => {
