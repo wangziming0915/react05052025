@@ -1,0 +1,253 @@
+{
+  "info": {
+    "_postman_id": "b5fa326f-7070-4c25-bec5-7cc09a49e594",
+    "name": "node-js-training",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46012563",
+    "_collection_link": "https://felix-6649464.postman.co/workspace/Felix's-Workspace~43270d81-1550-4ed9-8de5-25c4be4360da/collection/46012563-b5fa326f-7070-4c25-bec5-7cc09a49e594?action=share&source=collection_link&creator=46012563"
+  },
+  "item": [
+    {
+      "name": "Todos",
+      "item": [
+        {
+          "name": "Add Todo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"code\",\n    \"description\": \"do 100 leetcodes\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_URL}}/todos",
+              "host": ["{{API_URL}}"],
+              "path": ["todos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get todos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{API_URL}}/todos",
+              "host": ["{{API_URL}}"],
+              "path": ["todos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Todo",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{API_URL}}/todos/:id",
+              "host": ["{{API_URL}}"],
+              "path": ["todos", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3iBjibKnT"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Todo",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"completed\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_URL}}/todos/:id",
+              "host": ["{{API_URL}}"],
+              "path": ["todos", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "vBXnDIaaZ"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"normal_user\",\n    \"password\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_URL}}/auth/login",
+              "host": ["{{API_URL}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{API_URL}}/auth/logout",
+              "host": ["{{API_URL}}"],
+              "path": ["auth", "logout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Internal users",
+      "item": [
+        {
+          "name": "Control Board",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{API_URL}}/internal/control-board",
+              "host": ["{{API_URL}}"],
+              "path": ["internal", "control-board"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ban User (Mod)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{API_URL}}/internal/ban-user/:id",
+              "host": ["{{API_URL}}"],
+              "path": ["internal", "ban-user", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "11111"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin_user\",\n    \"password\": \"1234\",\n    \"role\": \"admin\"\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_URL}}/users",
+              "host": ["{{API_URL}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "private",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{API_URL}}/private",
+          "host": ["{{API_URL}}"],
+          "path": ["private"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "admin-only",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{API_URL}}/admin-only",
+          "host": ["{{API_URL}}"],
+          "path": ["admin-only"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "API_URL",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
