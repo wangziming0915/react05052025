@@ -1,0 +1,202 @@
+/* frontend/src/App.css */
+
+/* 通用样式 */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(to bottom right, #e0f2fe, #ede9fe); /* 渐变背景 */
+  min-height: 100vh; /* 最小高度占满视口 */
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  color: #2d3748; /* 默认字体颜色 */
+}
+
+/* 容器基础样式 */
+.login-container, .todo-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* 阴影效果 */
+  width: 90%; /* 手机端宽度 */
+  max-width: 400px; /* PC端最大宽度 */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* 元素间距 */
+  margin: 1rem; /* 外边距，防止贴边 */
+  box-sizing: border-box; /* 边框和内边距包含在宽度内 */
+}
+
+/* 标题样式 */
+h2 {
+  font-size: 1.875rem; /* 大字体 */
+  font-weight: 800; /* 加粗 */
+  color: #2b6cb0; /* 深蓝色 */
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* 输入框通用样式 */
+input {
+  width: calc(100% - 24px); /* 100%宽度减去内边距 */
+  padding: 0.75rem 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out; /* 平滑过渡 */
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3b82f6; /* 聚焦时蓝色边框 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* 聚焦时蓝色光晕 */
+}
+
+/* 按钮通用样式 */
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #2563eb; /* 主色蓝 */
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out; /* 平滑过渡 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* 默认宽度 */
+  box-sizing: border-box;
+}
+
+button:hover {
+  background-color: #1d4ed8; /* 悬停时更深的蓝色 */
+  transform: translateY(-2px); /* 悬停时向上轻微移动 */
+}
+
+/* 错误消息样式 */
+.error-message {
+  color: #ef4444; /* 红色 */
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* 登录/注册界面特有样式 */
+.login-container button:last-of-type {
+  background-color: transparent;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  box-shadow: none;
+  margin-top: 5px;
+}
+
+.login-container button:last-of-type:hover {
+  background-color: #e0f2fe; /* 悬停时浅蓝色背景 */
+  transform: translateY(-2px);
+}
+
+/* 待办事项界面特有样式 */
+.todo-container .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.todo-container h2 {
+  margin-bottom: 0;
+  text-align: left;
+  flex-grow: 1; /* 占据剩余空间 */
+  font-size: 1.5rem; /* 稍微小一点的标题 */
+  color: #2d3748;
+}
+
+/* 退出按钮样式 */
+.logout-button {
+  background-color: #ef4444; /* 红色 */
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  width: auto; /* 宽度自适应内容 */
+  min-width: 80px;
+  align-self: flex-end;
+}
+
+.logout-button:hover {
+  background-color: #dc2626; /* 悬停时更深的红色 */
+}
+
+.input-row {
+  display: flex;
+  gap: 10px; /* 输入框和按钮之间的间距 */
+  margin-bottom: 1rem;
+}
+
+.input-row input {
+  flex-grow: 1; /* 输入框占据大部分空间 */
+}
+
+.todo-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-container li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9fafb; /* 浅灰色背景 */
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* 轻微阴影 */
+  margin-bottom: 0.5rem;
+  word-break: break-word; /* 防止长文本溢出 */
+  transition: all 0.2s ease-in-out;
+}
+
+.todo-container li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.todo-container li span {
+  flex-grow: 1;
+  margin-right: 10px; /* 待办事项文本和删除按钮的间距 */
+}
+
+.todo-container li button.delete-button {
+  background-color: #ef4444; /* 删除按钮的红色 */
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  width: auto;
+  min-width: unset; /* 移除最小宽度限制 */
+  flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+.todo-container li button.delete-button:hover {
+  background-color: #dc2626;
+}
+
+.no-todos-message {
+  text-align: center;
+  color: #6b7280; /* 灰色文本 */
+  margin-top: 20px;
+  font-style: italic;
+}
+
+/* 响应式调整 */
+@media (min-width: 768px) {
+  .login-container, .todo-container {
+    max-width: 500px; /* 平板和桌面视图 */
+  }
+}
+
+@media (min-width: 1024px) {
+  .login-container, .todo-container {
+    max-width: 600px; /* 更宽的桌面视图 */
+  }
+}
