@@ -3,21 +3,29 @@
 const express = require("express");
 const cors = require("cors");
 const { v4: uuidv4 } = require("uuid"); 
+const mysql = require('mysql2/promise');
 
 const app = express();
 app.use(cors()); 
 app.use(express.json()); 
 
 
-const users = {}; 
-const passwords = {}; 
+// const users = {}; 
+// const passwords = {}; 
+const db = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: '1234',
+  database: 'todo_app_db',
+  port: 3306,
+});
 
 app.get("/test", (req, res) => {
   console.log("[Backend] Received GET /test request.");
   res.send("Connected to backend");
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   console.log(`[Backend] Attempting to register user: ${username}`);
 
@@ -25,79 +33,68 @@ app.post("/register", (req, res) => {
     return res.status(400).json({ message: "Missing username or password" });
   }
 
-  if (users[username]) {
-    return res.status(409).json({ message: "User already exists" });
+  try {
+    const [rows] = await db.query('SELECT username FROM users WHERE username = ?', [username]);
+    if (rows.length > 0) {
+      return res.status(409).json({ message: "User already exists" });
+    }
+    await db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, password]);
+    res.json({ username });
+  } catch (err) {
+    res.status(500).json({ message: "Database error" });
   }
-
-  users[username] = [];
-  passwords[username] = password;
-  console.log(`[Backend] User registered successfully: ${username}`);
-  console.log("[Backend] Current users state (after register):", JSON.stringify(users, null, 2));
-  res.json({ username });
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  console.log(`[Backend] Received login attempt for username: ${username}`);
-  console.log(`[Backend] Request body: ${JSON.stringify(req.body)}`);
   if (!username || !password) {
     return res.status(400).json({ message: "Username and password required" });
   }
-
-  if (!users[username] || passwords[username] !== password) {
-    console.log(`[Backend] Login failed for ${username}: Invalid credentials.`);
-    return res.status(401).json({ message: "Invalid credentials" });
+  try {
+    const [rows] = await db.query('SELECT password FROM users WHERE username = ?', [username]);
+    if (rows.length === 0 || rows[0].password !== password) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+    res.json({ message: "Login successful", username });
+  } catch (err) {
+    res.status(500).json({ message: "Database error" });
   }
-
-  console.log(`[Backend] Login successful for username: ${username}`);
-  res.json({ message: "Login successful", username });
 });
 
-app.get("/todos/:username", (req, res) => {
+app.get("/todos/:username", async (req, res) => {
   const { username } = req.params;
-  console.log(`[Backend] Fetching todos for username: ${username}`);
-  res.json(users[username] || []);
+  try {
+    const [rows] = await db.query('SELECT id, text FROM todos WHERE username = ?', [username]);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ message: "Database error" });
+  }
 });
 
-app.post("/todos", (req, res) => {
+app.post("/todos", async (req, res) => {
   const { username, text } = req.body;
-  console.log(`[Backend] Add todo attempt for username: ${username}, text: ${text}`);
-
   if (!username || !text) {
     return res.status(400).json({ message: "Missing fields (username or text)" });
   }
-
-  if (!users[username]) {
-    console.log(`[Backend] Add todo failed: User ${username} not found.`);
-    return res.status(400).json({ message: "User not found" });
+  try {
+    await db.query('INSERT INTO todos (id, username, text) VALUES (?, ?, ?)', [uuidv4(), username, text]);
+    res.status(201).json({ message: "Todo added" });
+  } catch (err) {
+    res.status(500).json({ message: "Database error" });
   }
-
-  const newTodo = { id: uuidv4(), text };
-  users[username].push(newTodo);
-  console.log(`[Backend] Todo added for ${username}: "${newTodo.text}"`);
-  console.log(`[Backend] ${username}'s current todos:`, JSON.stringify(users[username], null, 2));
-  res.status(201).json(newTodo); 
 });
 
-app.delete("/todos", (req, res) => {
+app.delete("/todos", async (req, res) => {
   const { username, id } = req.body;
-  console.log(`[Backend] Delete todo attempt for username: ${username}, todo ID: ${id}`);
-
-  if (!users[username]) {
-    console.log(`[Backend] Delete todo failed: User ${username} not found.`);
-    return res.status(400).json({ message: "User not found" });
+  try {
+    const [result] = await db.query('DELETE FROM todos WHERE username = ? AND id = ?', [username, id]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+    res.json({ message: "Deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Database error" });
   }
-
-  const initialLength = users[username].length;
-  users[username] = users[username].filter(todo => todo.id !== id);
-
-  if (users[username].length === initialLength) {
-    console.log(`[Backend] Delete todo failed: Todo ID ${id} not found for user ${username}.`);
-    return res.status(404).json({ message: "Todo not found" });
-  }
-
-  console.log(`[Backend] Todo deleted for ${username}: ID ${id}`);
-  res.json({ message: "Deleted" });
 });
 
 app.listen(3001, () => {

@@ -1,0 +1,16 @@
+{
+  "name": "d7",
+  "version": "1.0.0",
+  "main": "filter.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jest": "^30.0.2"
+  }
+}
